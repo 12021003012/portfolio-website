@@ -1,79 +1,62 @@
-from flask import Flask, render_template, request, jsonify
-from flask_cors import CORS
+import os
+from flask import Flask, render_template, request, jsonify, send_from_directory
 from flask_mail import Mail, Message
 import logging
-import os
 
-# Initialize the Flask application
-app = Flask(__name__, static_folder='static', template_folder='templates')
-
-# --- Email Configuration ---
-# IMPORTANT: Use environment variables to keep your credentials secure.
-# Do not hardcode your email and password in the code.
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = os.environ.get('EMAIL_USER')
-app.config['MAIL_PASSWORD'] = os.environ.get('EMAIL_PASS')
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
-
-# Initialize Flask-Mail
-mail = Mail(app)
-
-# Enable Cross-Origin Resource Sharing (CORS)
-CORS(app)
-
-# Configure logging
+app = Flask(__name__, template_folder='templates', static_folder='static')
 logging.basicConfig(level=logging.INFO)
 
+# Configuration for Flask-Mail
+# Using port 465 for SSL, which is standard for smtplib
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USERNAME'] = os.environ.get('EMAIL_USER')
+app.config['MAIL_PASSWORD'] = os.environ.get('EMAIL_PASS')
+
+mail = Mail(app)
+
 @app.route('/')
-def index():
-    """Serves the main portfolio HTML file."""
+def home():
+    """Serves the main portfolio page."""
     return render_template('portfolio.html')
 
-@app.route('/api/contact', methods=['POST'])
-def handle_contact_form():
-    """
-    API endpoint to handle contact form submissions.
-    It receives form data, sends an email, and returns a JSON response.
-    """
-    data = request.get_json()
-    if not data:
-        return jsonify({"status": "error", "message": "Invalid request"}), 400
+@app.route('/download-cv')
+def download_cv():
+    """Handles the request to download the CV."""
+    try:
+        # Serves the file from the 'static' folder
+        return send_from_directory(app.static_folder, 'Cv_final_best.pdf', as_attachment=True)
+    except FileNotFoundError:
+        return "Error: CV file not found on the server.", 404
 
+@app.route('/api/contact', methods=['POST'])
+def contact():
+    """Handles the contact form submission."""
+    data = request.get_json()
     name = data.get('name')
     email = data.get('email')
     message_body = data.get('message')
+    
+    mail_recipient = os.environ.get('MAIL_RECIPIENT')
 
-    if not all([name, email, message_body]):
-        return jsonify({"status": "error", "message": "Missing required fields"}), 400
+    if not all([name, email, message_body, mail_recipient]):
+        return jsonify({'error': 'Missing form data or server configuration'}), 400
 
-    # Create the email message
-    subject = f"New Contact Form Message from {name}"
-    sender = app.config['MAIL_USERNAME']
-    # The recipient should be your personal email address, where you want to receive notifications.
-    # It's good practice to also load this from an environment variable.
-    recipient = os.environ.get('MAIL_RECIPIENT', app.config['MAIL_USERNAME'])
-
-    msg = Message(subject, sender=sender, recipients=[recipient])
-    msg.body = f"""
-    You have received a new message from your portfolio contact form.
-
-    Name: {name}
-    Email: {email}
-
-    Message:
-    {message_body}
-    """
+    msg = Message(
+        subject=f"New Contact Form Message from {name}",
+        sender=app.config['MAIL_USERNAME'],
+        recipients=[mail_recipient]
+    )
+    msg.body = f"Name: {name}\nEmail: {email}\n\nMessage:\n{message_body}"
 
     try:
-        # Send the email
         mail.send(msg)
         app.logger.info(f"Email sent successfully from {email}")
-        return jsonify({"status": "success", "message": "Message sent successfully! Thank you for reaching out."}), 200
+        return jsonify({'message': 'Message sent successfully!'}), 200
     except Exception as e:
         app.logger.error(f"Failed to send email: {e}")
-        return jsonify({"status": "error", "message": "Sorry, there was an error sending your message. Please try again later."}), 500
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

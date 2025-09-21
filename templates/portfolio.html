@@ -1,369 +1,311 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deep Sengupta - Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-            overflow-x: hidden;
         }
-        .reveal {
+        .fade-in {
             opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
-        .reveal.visible {
+        .fade-in.visible {
             opacity: 1;
             transform: translateY(0);
         }
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 25px -5px rgba(3, 222, 206, 0.1), 0 10px 10px -5px rgba(3, 222, 206, 0.04);
-        }
-        .typing-cursor {
-            border-right: .15em solid #2dd4bf;
-            animation: blink-caret .75s step-end infinite;
-        }
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: #2dd4bf; }
-        }
-        /* Modal styles */
-        .modal {
-            transition: opacity 0.25s ease;
-        }
-        .modal-active {
-            overflow-x: hidden;
-            overflow-y: auto;
-        }
     </style>
 </head>
-<body class="bg-gray-900 text-white">
+<body class="bg-gray-900 text-gray-200">
 
-    <!-- Navbar -->
-    <nav class="bg-gray-800/80 backdrop-blur-sm p-4 fixed w-full z-20 top-0 shadow-lg">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold text-teal-400">Deep Sengupta</a>
-            <div class="hidden md:flex space-x-6">
-                <a href="#about" class="hover:text-teal-400 transition-colors">About</a>
-                <a href="#skills" class="hover:text-teal-400 transition-colors">Skills</a>
-                <a href="#projects" class="hover:text-teal-400 transition-colors">Projects</a>
-                <a href="#experience" class="hover:text-teal-400 transition-colors">Experience</a>
-                <a href="#contact" class="hover:text-teal-400 transition-colors">Contact</a>
-            </div>
-            <div class="md:hidden">
-                <button id="menu-btn" class="text-white focus:outline-none">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-                </button>
-            </div>
-        </div>
-        <div id="mobile-menu" class="hidden md:hidden">
-            <a href="#about" class="block py-2 px-4 text-sm hover:bg-gray-700">About</a>
-            <a href="#skills" class="block py-2 px-4 text-sm hover:bg-gray-700">Skills</a>
-            <a href="#projects" class="block py-2 px-4 text-sm hover:bg-gray-700">Projects</a>
-            <a href="#experience" class="block py-2 px-4 text-sm hover:bg-gray-700">Experience</a>
-            <a href="#contact" class="block py-2 px-4 text-sm hover:bg-gray-700">Contact</a>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <header class="bg-gray-900 h-screen flex items-center justify-center text-center reveal">
-        <div>
-            <img src="https://placehold.co/150x150/0f172a/2dd4bf?text=DS" alt="Deep Sengupta" class="rounded-full mx-auto mb-4 border-4 border-teal-400">
-            <h1 class="text-5xl font-bold mb-2">Deep Sengupta</h1>
-            <p class="text-xl text-gray-400 mb-8">
-                <span id="typing-text" class="typing-cursor"></span>
-            </p>
-            <!-- Make sure your CV file is in the 'static' folder -->
-            <a href="/static/Cv_final_best.pdf" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-6 rounded-full transition-transform transform hover:scale-105" download>Download CV</a>
+    <!-- Header -->
+    <header class="bg-gray-900/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-cyan-400">Deep Sengupta</a>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#about" class="hover:text-cyan-400 transition-colors">About</a>
+                <a href="#skills" class="hover:text-cyan-400 transition-colors">Skills</a>
+                <a href="#projects" class="hover:text-cyan-400 transition-colors">Projects</a>
+                <a href="#experience" class="hover:text-cyan-400 transition-colors">Experience</a>
+                <a href="#contact" class="hover:text-cyan-400 transition-colors">Contact</a>
+            </nav>
         </div>
     </header>
 
-    <!-- About Section -->
-    <section id="about" class="py-20 bg-gray-800">
-        <div class="container mx-auto px-6 reveal">
-            <h2 class="text-4xl font-bold text-center mb-12">About Me</h2>
-            <p class="text-lg text-center max-w-3xl mx-auto text-gray-300">
-                A highly motivated and dedicated undergraduate student pursuing a B.Tech in Computer Science and Engineering with a specialization in Artificial Intelligence. Passionate about leveraging technology to solve real-world problems, with a strong foundation in data structures, algorithms, and machine learning. Eager to contribute to a challenging and innovative work environment.
-            </p>
-        </div>
-    </section>
+    <main class="container mx-auto px-6 pt-24">
+        <!-- Hero Section -->
+        <section id="hero" class="min-h-screen flex flex-col justify-center items-start text-left">
+            <div class="max-w-3xl">
+                <p class="text-cyan-400 text-lg mb-2">Hi, my name is</p>
+                <h1 class="text-5xl md:text-7xl font-bold text-gray-100">Deep Sengupta.</h1>
+                <h2 class="text-4xl md:text-6xl font-bold text-gray-400 mt-2">I build things for the web.</h2>
+                <p class="mt-6 text-lg text-gray-400">
+                    I'm a Computer Science undergraduate specializing in AI, with a passion for developing intelligent solutions and creating intuitive, user-friendly web experiences.
+                </p>
+                <div class="mt-8 flex gap-4">
+                    <!-- FIX: Updated CV download link -->
+                    <a href="/download-cv" target="_blank" class="bg-cyan-500 text-gray-900 font-semibold px-6 py-3 rounded-md hover:bg-cyan-400 transition-all shadow-lg shadow-cyan-500/20">
+                        Download CV
+                    </a>
+                    <a href="#contact" class="border-2 border-cyan-500 text-cyan-500 font-semibold px-6 py-3 rounded-md hover:bg-cyan-500 hover:text-gray-900 transition-all">
+                        Get In Touch
+                    </a>
+                </div>
+            </div>
+        </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="py-20 bg-gray-900">
-        <div class="container mx-auto px-6 reveal">
-            <h2 class="text-4xl font-bold text-center mb-12">Skills</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                <div class="bg-gray-800 p-6 rounded-lg"><i class="fas fa-sitemap text-3xl text-teal-400 mb-3"></i><h3 class="text-xl font-semibold">Data Structures & Algorithms</h3></div>
-                <div class="bg-gray-800 p-6 rounded-lg"><i class="fas fa-robot text-3xl text-teal-400 mb-3"></i><h3 class="text-xl font-semibold">AI & Machine Learning</h3></div>
-                <div class="bg-gray-800 p-6 rounded-lg"><i class="fas fa-brain text-3xl text-teal-400 mb-3"></i><h3 class="text-xl font-semibold">Deep Learning</h3></div>
-                <div class="bg-gray-800 p-6 rounded-lg"><i class="fas fa-database text-3xl text-teal-400 mb-3"></i><h3 class="text-xl font-semibold">Database Management</h3></div>
-                <div class="bg-gray-800 p-6 rounded-lg"><i class="fas fa-cogs text-3xl text-teal-400 mb-3"></i><h3 class="text-xl font-semibold">Operating Systems</h3></div>
-                <div class="bg-gray-800 p-6 rounded-lg"><i class="fas fa-code text-3xl text-teal-400 mb-3"></i><h3 class="text-xl font-semibold">Object Oriented Programming</h3></div>
-                <div class="bg-gray-800 p-6 rounded-lg"><i class="fab fa-java text-3xl text-teal-400 mb-3"></i><h3 class="text-xl font-semibold">C++ / C / Java</h3></div>
-                <div class="bg-gray-800 p-6 rounded-lg"><i class="fas fa-laptop-code text-3xl text-teal-400 mb-3"></i><h3 class="text-xl font-semibold">Competitive Coding</h3></div>
+        <!-- About Section -->
+        <section id="about" class="py-20 fade-in">
+            <h2 class="text-4xl font-bold text-center mb-12 text-gray-100">About Me</h2>
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-2/3">
+                    <p class="text-gray-400 mb-4">
+                        Hello! I'm Deep, a passionate and dedicated Computer Science student from the Institute of Engineering and Management, Kolkata. My journey in technology has been driven by a fascination with Artificial Intelligence and its potential to solve real-world problems.
+                    </p>
+                    <p class="text-gray-400 mb-4">
+                        I thrive on challenges and have consistently achieved academic excellence, receiving awards for my performance. My core expertise lies in Data Structures, Algorithms, and Machine Learning. I have hands-on experience in developing a variety of projects, from AI-powered tools like voice-controlled chess and emotion detection systems to full-stack web applications.
+                    </p>
+                    <p class="text-gray-400">
+                        I am always eager to learn and apply new technologies to create efficient, scalable, and impactful solutions.
+                    </p>
+                </div>
+                <div class="md:w-1/3 flex justify-center">
+                    <div class="w-64 h-64 rounded-full bg-gray-800 border-4 border-cyan-400 overflow-hidden">
+                        <img src="https://placehold.co/300x300/111827/7DD3FC?text=DS" alt="Deep Sengupta" class="w-full h-full object-cover">
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
-    
-    <!-- Projects Section -->
-    <section id="projects" class="py-20 bg-gray-800">
-        <div class="container mx-auto px-6 reveal">
-            <h2 class="text-4xl font-bold text-center mb-12">Projects</h2>
-            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Projects will be dynamically inserted here by JavaScript -->
-            </div>
-            <div class="text-center mt-12">
-                <button id="view-more-btn" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-6 rounded-full transition-transform transform hover:scale-105">View More</button>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Experience Section -->
-    <section id="experience" class="py-20 bg-gray-900">
-        <div class="container mx-auto px-6 reveal">
-            <h2 class="text-4xl font-bold text-center mb-12">Experience</h2>
-            <div class="max-w-3xl mx-auto relative border-l-2 border-teal-400 pl-10">
-                <div class="mb-10">
-                    <div class="absolute w-4 h-4 bg-teal-400 rounded-full -left-2 mt-1.5"></div>
-                    <h3 class="text-2xl font-bold">Administrator Certified Associate</h3>
-                    <p class="text-teal-400">Oracle India | Apr 2024 - Jul 2024</p>
-                    <p class="mt-2 text-gray-300">Managed database tasks, features, and functions, demonstrating fundamental skills in supporting Oracle products.</p>
-                </div>
-                <div class="mb-10">
-                     <div class="absolute w-4 h-4 bg-teal-400 rounded-full -left-2 mt-1.5"></div>
-                    <h3 class="text-2xl font-bold">Campus Ambassador</h3>
-                    <p class="text-teal-400">My Captain | Feb 2022 - May 2022</p>
-                    <p class="mt-2 text-gray-300">Resolved process issues to encourage smoother procedures, more efficient workflow, and overall business growth.</p>
-                </div>
+        <!-- Skills Section -->
+        <section id="skills" class="py-20 fade-in">
+            <h2 class="text-4xl font-bold text-center mb-12 text-gray-100">My Skills</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 text-center">
+                <!-- Skill items will be injected by JS -->
             </div>
-        </div>
-    </section>
-    
-    <!-- Education & Certificates Section -->
-    <section id="education" class="py-20 bg-gray-800">
-        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-16 reveal">
-            <div>
-                <h2 class="text-3xl font-bold text-center mb-8">Education</h2>
-                <div class="bg-gray-900 p-6 rounded-lg">
-                    <h3 class="text-2xl font-bold">B.Tech in Computer Science & Engineering (AI)</h3>
-                    <p class="text-teal-400">Institute Of Engineering and Management, Kolkata | 2021 - Present</p>
-                    <p class="mt-2 text-gray-300">SGPA: 9.59 (till 6th semester)</p>
-                </div>
-            </div>
-            <div>
-                <h2 class="text-3xl font-bold text-center mb-8">Certificates</h2>
-                <div id="certificates-list" class="space-y-4">
-                    <!-- Certificates will be dynamically inserted here -->
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-gray-900">
-        <div class="container mx-auto px-6 reveal">
-            <h2 class="text-4xl font-bold text-center mb-12">Contact Me</h2>
+        <!-- Projects Section -->
+        <section id="projects" class="py-20 fade-in">
+            <h2 class="text-4xl font-bold text-center mb-12 text-gray-100">My Projects</h2>
+            <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project cards will be injected by JS -->
+            </div>
+        </section>
+        
+        <!-- Experience Section -->
+        <section id="experience" class="py-20 fade-in">
+            <h2 class="text-4xl font-bold text-center mb-12 text-gray-100">Experience & Education</h2>
+            <div class="max-w-3xl mx-auto">
+                 <!-- Education and Experience items will be injected by JS -->
+            </div>
+        </section>
+        
+        <!-- Certificates Section -->
+        <section id="certificates" class="py-20 fade-in">
+            <h2 class="text-4xl font-bold text-center mb-12 text-gray-100">Certificates</h2>
+            <div id="certificates-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Certificates will be injected by JS -->
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 fade-in">
+            <h2 class="text-4xl font-bold text-center mb-12 text-gray-100">Get In Touch</h2>
             <div class="max-w-xl mx-auto">
-                <form id="contact-form" class="space-y-6">
-                    <div>
-                        <label for="name" class="block mb-2 text-sm font-medium">Your Name</label>
-                        <input type="text" id="name" name="name" class="bg-gray-800 border border-gray-600 text-white text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5" placeholder="John Doe" required>
+                <form id="contact-form" class="bg-gray-800 p-8 rounded-lg shadow-lg">
+                    <div class="mb-6">
+                        <label for="name" class="block text-gray-400 mb-2">Your Name</label>
+                        <input type="text" id="name" name="name" required class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-cyan-500">
                     </div>
-                    <div>
-                        <label for="email" class="block mb-2 text-sm font-medium">Your Email</label>
-                        <input type="email" id="email" name="email" class="bg-gray-800 border border-gray-600 text-white text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5" placeholder="name@company.com" required>
+                    <div class="mb-6">
+                        <label for="email" class="block text-gray-400 mb-2">Your Email</label>
+                        <input type="email" id="email" name="email" required class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-cyan-500">
                     </div>
-                    <div>
-                        <label for="message" class="block mb-2 text-sm font-medium">Your Message</label>
-                        <textarea id="message" name="message" rows="4" class="bg-gray-800 border border-gray-600 text-white text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5" placeholder="Leave a comment..."></textarea>
+                    <div class="mb-6">
+                        <label for="message" class="block text-gray-400 mb-2">Your Message</label>
+                        <textarea id="message" name="message" rows="5" required class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-cyan-500"></textarea>
                     </div>
-                    <button type="submit" class="w-full text-white bg-teal-500 hover:bg-teal-600 focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Send Message</button>
+                    <button type="submit" class="w-full bg-cyan-500 text-gray-900 font-bold py-3 px-6 rounded-md hover:bg-cyan-400 transition-all shadow-lg shadow-cyan-500/20">
+                        Send Message
+                    </button>
+                    <p id="form-status" class="text-center mt-4 text-sm"></p>
                 </form>
-                <div id="form-status" class="mt-4 text-center"></div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <footer class="bg-gray-800 text-center py-6">
-        <div class="flex justify-center space-x-6 mb-4">
-            <a href="https://www.linkedin.com/in/deep-sengupta-573363229/" target="_blank" class="text-gray-400 hover:text-teal-400 transition-colors">
-                <i class="fab fa-linkedin fa-2x"></i>
-            </a>
-        </div>
-        <p class="text-gray-500">&copy; 2024 Deep Sengupta. All Rights Reserved.</p>
+    <footer class="text-center py-8 text-gray-500">
+        <p>&copy; 2024 Deep Sengupta. All rights reserved.</p>
     </footer>
 
-    <!-- Project Modal -->
-    <div id="project-modal" class="modal fixed w-full h-full top-0 left-0 flex items-center justify-center hidden">
-        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
-        <div class="modal-container bg-gray-800 w-11/12 md:max-w-2xl mx-auto rounded-lg shadow-lg z-50 overflow-y-auto">
-            <div class="modal-content py-4 text-left px-6">
-                <div class="flex justify-between items-center pb-3">
-                    <p id="modal-title" class="text-2xl font-bold"></p>
-                    <button id="modal-close" class="cursor-pointer z-50">
-                        <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path></svg>
-                    </button>
-                </div>
-                <div id="modal-body"></div>
-                <div class="mt-4">
-                    <a id="modal-link" href="#" target="_blank" class="text-teal-400 hover:text-teal-500">View Project on GitHub &rarr;</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // --- Mobile Menu ---
-        const btn = document.getElementById('menu-btn');
-        const nav = document.getElementById('mobile-menu');
-        btn.addEventListener('click', () => { nav.classList.toggle('hidden'); });
-
-        // --- Typing Animation ---
-        const typingText = document.getElementById('typing-text');
-        const texts = ["Computer Science & Engineering Student", "AI & Machine Learning Enthusiast", "Full-Stack Developer"];
-        let textIndex = 0, charIndex = 0, isDeleting = false;
-        function type() {
-            const currentText = texts[textIndex];
-            if (isDeleting) {
-                typingText.textContent = currentText.substring(0, charIndex - 1);
-                charIndex--;
-            } else {
-                typingText.textContent = currentText.substring(0, charIndex + 1);
-                charIndex++;
-            }
-            if (!isDeleting && charIndex === currentText.length) {
-                setTimeout(() => isDeleting = true, 2000);
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                textIndex = (textIndex + 1) % texts.length;
-            }
-            setTimeout(type, isDeleting ? 75 : 150);
-        }
-        type();
-
-        // --- Scroll Animations ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
-            });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        // Data for dynamic content
+        const skills = [
+            'Data Structures & Algorithms', 'Artificial Intelligence', 'Machine Learning', 'Deep Learning',
+            'Database Management', 'Operating Systems', 'OOP', 'C', 'Java', 'C++', 'Python', 'Flask'
+        ];
         
-        // --- Dynamic Project & Certificate Loading ---
         const projects = [
-            { title: 'Audio Deepfake Detection', description: 'A CNN model using MFCC features to classify real and fake audio.', details: 'This project involved data preprocessing of audio files, feature extraction using Mel-Frequency Cepstral Coefficients (MFCCs), and training a Convolutional Neural Network (CNN) to distinguish between authentic and synthetically generated audio. The model was then integrated into a web application using Flask.', githubLink: '#' },
-            { title: 'Face Recognition Attendance System', description: 'Automates attendance using face recognition with Python, Tkinter, and OpenCV.', details: 'Built a desktop application that captures live video, detects faces, and compares them against a database of known students to mark attendance automatically. The system updates records in a spreadsheet in real-time.', githubLink: '#' },
-            { title: 'Voice Controlled AI Chess Game', description: 'An accessible chess game for the visually challenged that accepts voice commands.', details: 'Developed a complete chess engine with an AI opponent. The key feature is the integration of speech recognition to allow players to announce their moves, and a text-to-speech engine to announce the AI\'s counter-moves, making it fully playable without visual cues.', githubLink: '#' },
-            { title: 'Virtual Mouse', description: 'Control the mouse cursor using hand gestures via a webcam.', details: 'This project uses OpenCV for computer vision to track the position of the user\'s index finger to move the cursor. It also recognizes gestures, like bringing the middle finger close to the index finger, to simulate a mouse click.', githubLink: '#' },
-            { title: 'JARVIS Voice Assistant', description: 'A personalized voice assistant to execute PC commands.', details: 'Inspired by Iron Man, this Python script uses speech recognition and various libraries to perform tasks like opening websites, searching Google, checking the time, and controlling system functions based on voice commands.', githubLink: '#' },
-            { title: 'Emotion Detection System', description: 'Detects human emotions from a live webcam feed.', details: 'Utilized a pre-trained deep learning model to analyze facial expressions in real-time from a webcam feed and classify them into categories like happy, sad, angry, and neutral.', githubLink: '#' }
+            { name: 'Audio Deepfake Detection', description: 'Using CNN and MFCC features to classify real and fake audio, with a responsive Flask web interface.', link: '#' },
+            { name: 'Face Recognition Attendance', description: 'A system to take attendance via facial recognition and update student data in an Excel sheet.', link: '#' },
+            { name: 'Voice Controlled AI Chess', description: 'A chess game designed for visually challenged players, controlled entirely by voice commands.', link: '#' },
+            { name: 'Virtual Mouse', description: 'Control the mouse cursor using hand gestures (index and middle finger) via a webcam.', link: '#' },
+            { name: 'JARVIS Voice Assistant', description: 'A personalized PC voice assistant to execute commands like opening tabs, searching, and system controls.', link: '#' },
+            { name: 'Emotion Detection System', description: 'Detects user emotions in real-time through facial expressions from a webcam feed.', link: '#' }
         ];
 
+        const experience = [
+            { type: 'work', title: 'Administrator Certified Associate', company: 'Oracle India', period: 'Apr 2024 - Jul 2024', description: 'Validated abilities to manage database tasks, features, and functions, providing a strong foundation for supporting Oracle products.' },
+            { type: 'education', title: 'B.Tech in Computer Science (AI)', company: 'Institute Of Engineering and Management, Kolkata', period: 'Aug 2021 - Present', description: 'SGPA: 9.59 (till 6th semester). Recipient of Academic Award for excellence (2 times).' },
+            { type: 'education', title: 'Senior Secondary (WBCHSE)', company: 'Subhaspalli Bidyaniketan (HS), Asansol', period: '2019 - 2021', description: 'Overall Percentage: 94.6%' },
+        ];
+        
         const certificates = [
-            { name: 'Introduction to Generative AI - Google Cloud', link: '#' },
-            { name: 'Microsoft Azure Cloud Services - Microsoft', link: '#' },
-            { name: 'Cybersecurity Tools & Cyber Attacks - IBM', link: '#' }
+            { name: 'Introduction to Generative AI', issuer: 'Google Cloud (Coursera)', link: '#' },
+            { name: 'Introduction to Microsoft Azure Cloud Services', issuer: 'Microsoft (Coursera)', link: '#' },
+            { name: 'Introduction to Cybersecurity Tools & Cyber Attacks', issuer: 'IBM (Coursera)', link: '#' },
+            { name: 'Deep Learning: Image Recognition', issuer: 'LinkedIn Learning', link: '#' }
         ];
 
-        const projectsGrid = document.getElementById('projects-grid');
-        const viewMoreBtn = document.getElementById('view-more-btn');
-        let visibleProjects = 3;
+        // Functions to populate content
+        function populateSkills() {
+            const container = document.querySelector('#skills .grid');
+            skills.forEach(skill => {
+                const div = document.createElement('div');
+                div.className = 'bg-gray-800 p-4 rounded-lg';
+                div.innerHTML = `<p class="font-medium">${skill}</p>`;
+                container.appendChild(div);
+            });
+        }
 
-        function renderProjects() {
-            projectsGrid.innerHTML = '';
-            for (let i = 0; i < Math.min(visibleProjects, projects.length); i++) {
-                const project = projects[i];
+        function populateProjects() {
+            const container = document.getElementById('projects-container');
+            projects.forEach(project => {
                 const card = document.createElement('div');
-                card.className = 'bg-gray-900 rounded-lg shadow-lg overflow-hidden project-card transition duration-300 reveal cursor-pointer';
-                card.innerHTML = `<div class="p-6"><h3 class="text-2xl font-bold mb-2">${project.title}</h3><p class="text-gray-400">${project.description}</p></div>`;
-                card.addEventListener('click', () => openModal(project));
-                projectsGrid.appendChild(card);
-            }
-            document.querySelectorAll('#projects-grid .reveal').forEach(el => observer.observe(el));
-            if (visibleProjects >= projects.length) viewMoreBtn.style.display = 'none';
+                card.className = 'bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-cyan-500/20 hover:-translate-y-2 transition-all';
+                card.innerHTML = `
+                    <h3 class="text-xl font-bold text-cyan-400 mb-2">${project.name}</h3>
+                    <p class="text-gray-400 mb-4">${project.description}</p>
+                    <a href="${project.link}" target="_blank" class="text-cyan-400 hover:underline">View Details</a>
+                `;
+                container.appendChild(card);
+            });
         }
 
-        viewMoreBtn.addEventListener('click', () => {
-            visibleProjects += 3;
-            renderProjects();
-        });
-
-        const certificatesList = document.getElementById('certificates-list');
-        certificates.forEach(cert => {
-            const certElement = document.createElement('a');
-            certElement.href = cert.link;
-            certElement.target = '_blank';
-            certElement.className = 'block bg-gray-900 p-4 rounded-lg hover:bg-gray-700 transition-colors';
-            certElement.innerHTML = `<p>${cert.name} <i class="fas fa-external-link-alt text-xs ml-1"></i></p>`;
-            certificatesList.appendChild(certElement);
-        });
-
-        renderProjects();
-
-        // --- Project Modal ---
-        const modal = document.getElementById('project-modal');
-        const modalClose = document.getElementById('modal-close');
-        const modalOverlay = document.querySelector('.modal-overlay');
-        const modalTitle = document.getElementById('modal-title');
-        const modalBody = document.getElementById('modal-body');
-        const modalLink = document.getElementById('modal-link');
-
-        function openModal(project) {
-            modalTitle.textContent = project.title;
-            modalBody.innerHTML = `<p>${project.details}</p>`;
-            modalLink.href = project.githubLink;
-            modal.classList.remove('hidden');
-            document.body.classList.add('modal-active');
+        function populateExperience() {
+            const container = document.querySelector('#experience .max-w-3xl');
+            let content = '';
+            experience.forEach(item => {
+                content += `
+                <div class="relative pl-8 sm:pl-32 py-6 group">
+                    <div class="flex flex-col sm:flex-row items-start mb-1 sm:mb-0">
+                        <div class="flex-shrink-0 w-24 text-left mb-2 sm:mb-0">
+                            <p class="text-gray-400">${item.period}</p>
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="text-lg font-bold text-cyan-400">${item.title}</h3>
+                            <p class="text-gray-300 font-semibold">${item.company}</p>
+                            <p class="mt-2 text-gray-400">${item.description}</p>
+                        </div>
+                    </div>
+                    <!-- Vertical line -->
+                    <div class="absolute top-0 left-4 sm:left-28 h-full w-0.5 bg-gray-600 group-last:hidden"></div>
+                    <div class="absolute top-8 left-[10px] sm:left-[106px] w-4 h-4 rounded-full bg-cyan-500 border-2 border-gray-900"></div>
+                </div>`;
+            });
+            container.innerHTML = content;
         }
 
-        function closeModal() {
-            modal.classList.add('hidden');
-            document.body.classList.remove('modal-active');
+        function populateCertificates() {
+            const container = document.getElementById('certificates-container');
+            certificates.forEach(cert => {
+                const item = document.createElement('div');
+                item.className = 'bg-gray-800 p-5 rounded-lg flex justify-between items-center';
+                item.innerHTML = `
+                    <div>
+                        <h3 class="font-bold text-gray-100">${cert.name}</h3>
+                        <p class="text-sm text-gray-400">${cert.issuer}</p>
+                    </div>
+                    <a href="${cert.link}" target="_blank" class="text-cyan-400 hover:underline">Verify</a>
+                `;
+                container.appendChild(item);
+            });
         }
-        modalClose.addEventListener('click', closeModal);
-        modalOverlay.addEventListener('click', closeModal);
 
-        // --- Contact Form Handling ---
+        // Contact Form Logic
         const form = document.getElementById('contact-form');
         const formStatus = document.getElementById('form-status');
-        form.addEventListener('submit', async function(e) {
+
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData.entries());
-            
             formStatus.textContent = 'Sending...';
-            formStatus.className = 'mt-4 text-center text-blue-400';
-            
+            formStatus.classList.remove('text-red-400', 'text-green-400');
+
+            const formData = {
+                name: form.name.value,
+                email: form.email.value,
+                message: form.message.value,
+            };
+
             try {
-                // *** THE FIX IS HERE ***
-                const response = await fetch('http://127.0.0.1:5000/api/contact', {
+                // FIX: Updated fetch URL to your live Render URL
+                const response = await fetch('https://portfolio-website-8efi.onrender.com/api/contact', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
                 });
-                const result = await response.json();
+
                 if (response.ok) {
-                    formStatus.textContent = result.message || 'Message sent successfully!';
-                    formStatus.className = 'mt-4 text-center text-green-400';
+                    formStatus.textContent = 'Message sent successfully! Thank you for reaching out.';
+                    formStatus.classList.add('text-green-400');
                     form.reset();
                 } else {
-                    throw new Error(result.message || 'Network response was not ok.');
+                    throw new Error('Server responded with an error.');
                 }
             } catch (error) {
-                console.error('Fetch Error:', error);
-                formStatus.textContent = error.message || 'Failed to send message. Please try again later.';
-                formStatus.className = 'mt-4 text-center text-red-400';
+                console.error('Fetch error:', error);
+                formStatus.textContent = 'Sorry, there was an error sending your message. Please try again later.';
+                formStatus.classList.add('text-red-400');
             }
         });
-    });
+        
+        // Scroll Fade-in Animation Logic
+        const faders = document.querySelectorAll('.fade-in');
+        const appearOptions = {
+            threshold: 0.2,
+        };
+        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.classList.add('visible');
+                    appearOnScroll.unobserve(entry.target);
+                }
+            });
+        }, appearOptions);
+
+        faders.forEach(fader => {
+            appearOnScroll.observe(fader);
+        });
+
+        // Populate all content on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            populateSkills();
+            populateProjects();
+            populateExperience();
+            populateCertificates();
+        });
     </script>
 </body>
 </html>
