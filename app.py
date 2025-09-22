@@ -4,7 +4,8 @@ from flask_mail import Mail, Message
 from flask_cors import CORS
 import logging
 
-app = Flask(__name__, template_folder='templates', static_folder='static')
+# THE FIX: Ensure the folder name is lowercase to match server conventions
+app = Flask(__name__, template_folder='templates', static_folder='static') 
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 logging.basicConfig(level=logging.INFO)
 
@@ -34,9 +35,8 @@ def download_cv():
         app.logger.error("CV file not found in the static folder.")
         return "Error: CV file not found on the server.", 404
 
-# --- !! NEW DEBUGGING ROUTE !! ---
-# This route will help us see the file structure on the Render server.
-# After you solve the CV issue, you can remove this entire function.
+# --- !! DEBUGGING ROUTE !! ---
+# You can now remove this entire function after the fix is confirmed.
 @app.route('/debug-static')
 def debug_static_files():
     """Lists the contents of the project's root and static directories."""
