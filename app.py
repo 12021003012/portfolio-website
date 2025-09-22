@@ -1,21 +1,13 @@
 import os
 from flask import Flask, render_template, request, jsonify, send_from_directory
 from flask_mail import Mail, Message
-from flask_cors import CORS  # Import CORS
+from flask_cors import CORS
 import logging
 
-# This structure assumes your 'portfolio.html' is in a 'templates' folder
-# and your CV is in a 'static' folder.
 app = Flask(__name__, template_folder='templates', static_folder='static')
-
-# ** THE FIX for "failed to fetch" **
-# This allows your frontend (even on localhost) to make requests to your backend.
 CORS(app, resources={r"/api/*": {"origins": "*"}})
-
 logging.basicConfig(level=logging.INFO)
 
-# --- Configuration ---
-# Use environment variables for sensitive data
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_SSL'] = True
@@ -28,17 +20,11 @@ mail = Mail(app)
 
 @app.route('/')
 def home():
-    """Serves the main portfolio page from the 'templates' folder."""
     return render_template('portfolio.html')
 
 @app.route('/download-cv')
 def download_cv():
-    """
-    Handles the request to download the CV.
-    Looks for the file in the 'static' folder.
-    """
     try:
-        # This tells Flask to find 'Cv_final_best.pdf' inside the 'static' folder
         return send_from_directory(
             app.static_folder, 
             'Cv_final_best.pdf', 
@@ -48,9 +34,42 @@ def download_cv():
         app.logger.error("CV file not found in the static folder.")
         return "Error: CV file not found on the server.", 404
 
+# --- !! NEW DEBUGGING ROUTE !! ---
+# This route will help us see the file structure on the Render server.
+# After you solve the CV issue, you can remove this entire function.
+@app.route('/debug-static')
+def debug_static_files():
+    """Lists the contents of the project's root and static directories."""
+    try:
+        # Get the root path of the project on the server
+        root_path = os.path.abspath(os.path.dirname(__file__))
+        root_contents = os.listdir(root_path)
+        
+        # Get the path to the static folder
+        static_path = os.path.join(root_path, 'static')
+        static_contents = "Static folder not found."
+        
+        if os.path.exists(static_path):
+            static_contents = os.listdir(static_path)
+
+        # Format the output to be readable in a browser
+        response_html = f"""
+        <h1>Server File Debugger</h1>
+        <h2>Project Root Directory Contents:</h2>
+        <p>Path: {root_path}</p>
+        <pre>{root_contents}</pre>
+        <hr>
+        <h2>'static' Directory Contents:</h2>
+        <p>Path: {static_path}</p>
+        <pre>{static_contents}</pre>
+        """
+        return response_html
+    except Exception as e:
+        return f"An error occurred while debugging: {e}"
+
+
 @app.route('/api/contact', methods=['POST'])
 def contact():
-    """Handles the contact form submission via AJAX."""
     data = request.get_json()
     if not data:
         return jsonify({'error': 'Invalid request: No data received'}), 400
@@ -62,10 +81,9 @@ def contact():
     mail_recipient = os.environ.get('MAIL_RECIPIENT')
 
     if not all([name, email, message_body]):
-        app.logger.error("Email failed: Missing form data (name, email, or message).")
+        app.logger.error("Email failed: Missing form data.")
         return jsonify({'error': 'Please fill out all fields.'}), 400
 
-    # Final check for email credentials loaded from environment
     if not app.config['MAIL_USERNAME'] or not app.config['MAIL_PASSWORD'] or not mail_recipient:
         app.logger.error("CRITICAL: Server email environment variables are not set.")
         return jsonify({'error': 'Server configuration error.'}), 500
@@ -86,6 +104,5 @@ def contact():
         return jsonify({'error': 'An error occurred while sending the email.'}), 500
 
 if __name__ == '__main__':
-    # Use 0.0.0.0 to make it accessible on your network
     app.run(host='0.0.0.0', port=5000, debug=True)
 
